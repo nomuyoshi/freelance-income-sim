@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import Simulator from './Simulator';
 import './App.css';
+import 'bulma/css/bulma.min.css';
 
 function App() {
   return (

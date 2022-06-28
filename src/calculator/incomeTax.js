@@ -1,11 +1,8 @@
-import { AoiroKozyo } from "./globalConst";
-
-const FukkoTokubetsuRate = 0.021; // 復興特別所得税率
-const BasicKozyoAmount = 480000; // 基礎控除額
+import { AoiroKozyo, FukkoTokubetsuRate, IncomeTaxBasicKozyo } from "../const";
 
 // 所得税額計算
-export default function calcIncomeTax(sales, expenses, syakaihoken, otherKozyo) {
-  const kozyo = BasicKozyoAmount + syakaihoken + otherKozyo;
+export function calcIncomeTax(sales, expenses, syakaihoken, otherKozyo) {
+  const kozyo = IncomeTaxBasicKozyo + syakaihoken + otherKozyo;
   const taxableIncome = calcTaxableIncome(sales, expenses, kozyo);
   const [rate, kozyoByRate] = getIncomeTaxRateWithKozyo(taxableIncome);
 

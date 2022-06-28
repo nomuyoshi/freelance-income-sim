@@ -1,19 +1,14 @@
-import { AoiroKozyo } from "./globalConst";
-const BasicKozyoAmount = 430000; // 基礎控除額
-const PerCapitalBasisAmount = 5000; // 均等割額（都道府県民税＋市町村民税）
-const ResidentTaxRate = 0.1; // 住民税率（特別区民税＋都民税）
-const ChoseiKozyo = 2500; // 調整控除（簡易的に2500円固定）
-const NonTaxableBorder = 450000; // 所得が45万円以下の場合非課税(扶養無し)
+import { AoiroKozyo, PerCapitalBasisAmount, ResidentTaxRate, ChoseiKozyo, NonTaxableBorder, ResidentTaxBasicKozyo } from "../const";
 
 // 所得税額計算
-export default function calcResidentTax(sales, expenses, syakaihoken, otherKozyo) {
+export function calcResidentTax(sales, expenses, syakaihoken, otherKozyo) {
   // 所得が45万円以下の場合非課税
   if (NonTaxableBorder >= (sales - expenses - AoiroKozyo)) {
     return 0;
   }
 
   // 売上 - 経費 - 青色申告特別控除(65万円) - 住民税基礎控除（43万円）- 所得控除
-  const kozyo = BasicKozyoAmount + syakaihoken + otherKozyo;
+  const kozyo = ResidentTaxBasicKozyo + syakaihoken + otherKozyo;
   const taxableIncome = calcTaxableIncome(sales, expenses, kozyo);
   // 課税標準額 x 0.1(住民税率) - 調整控除
   const incomeLevy = taxableIncome * ResidentTaxRate - ChoseiKozyo;

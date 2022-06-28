@@ -1,6 +1,7 @@
 
 import './Simulator.css';
 import React from 'react';
+import { showYenHelper } from './helper';
 import calcKenkoHoken from './kenkoHoken';
 import calcNenkin from './nenkin';
 import calcIncomeTax from './incomeTax';
@@ -12,7 +13,7 @@ class Simulator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showResult: false,
+      editing: true,
       age: 30,
       sales: 0,
       expenses: 0,
@@ -29,12 +30,13 @@ class Simulator extends React.Component {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
-      [name]: value,
+      editing: true,
+      [name]: parseInt(value),
     });
   }
 
   handleSimilateClick() {
-    this.setState({showResult: true});
+    this.setState({editing: false});
   }
 
   canSimulate() {
@@ -65,7 +67,7 @@ class Simulator extends React.Component {
 
   render() {
     let consumptionTax, incomeTax, residentTax, nenkin, kenkoHoken;
-    const showResult = this.state.showResult;
+    const showResult = !this.state.editing;
     if (showResult) {
       consumptionTax = this.getConsumptionTax();
       incomeTax = this.getIncomeTax();
@@ -81,16 +83,16 @@ class Simulator extends React.Component {
             <tbody>
               <tr>
                 <th>年齢</th>
-                <td><input type="text" value={this.state.age} name="age" onChange={this.handleChange} /></td>
+                <td><input type="number" value={this.state.age} name="age" onChange={this.handleChange} /></td>
               </tr>
               <tr>
                 <th>売上</th>
-                <td><input type="text" value={this.state.sales} name="sales" onChange={this.handleChange} /></td>
+                <td><input type="number" value={this.state.sales} name="sales" onChange={this.handleChange} /></td>
               </tr>
               <tr>
                 <th>経費</th>
                 <td>
-                  <input type="text" value={this.state.expenses} name="expenses" onChange={this.handleChange} /><br />
+                  <input type="number" value={this.state.expenses} name="expenses" onChange={this.handleChange} /><br />
                   <span className='is-size-7 has-text-danger'>※ 前年の消費税納税額を除いた経費を入力。消費税は自動で加算されます。</span>
                 </td>
               </tr>
@@ -101,17 +103,17 @@ class Simulator extends React.Component {
               <tr>
                 <th>所得税<br />所得控除</th>
                 <td>
-                  所得税基礎控除: 480,000円<br />
+                  所得税基礎控除: {showYenHelper(480000)}<br />
                   社会保険料控除: 自動計算<br />
-                  その他: <input type="text" value={this.state.incomeTaxKozyoOther} name="incomeTaxKozyoOther" onChange={this.handleChange} />
+                  その他: <input type="number" value={this.state.incomeTaxKozyoOther} name="incomeTaxKozyoOther" onChange={this.handleChange} />
                 </td>
               </tr>
               <tr>
                 <th>住民税<br />所得控除</th>
                 <td>
-                  所得税基礎控除: 430,000円<br />
+                  基礎控除: {showYenHelper(430000)}<br />
                   社会保険料控除: 自動計算<br />
-                  その他: <input type="text" value={this.state.residentTaxKozyoOther} name="residentTaxKozyoOther" onChange={this.handleChange} />
+                  その他: <input type="number" value={this.state.residentTaxKozyoOther} name="residentTaxKozyoOther" onChange={this.handleChange} />
                 </td>
               </tr>
             </tbody>

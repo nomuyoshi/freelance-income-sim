@@ -1,43 +1,56 @@
+import PropTypes from 'prop-types';
+import { showYenHelper } from './helper';
 
-function Result(props) {
-  const expenses = props.expenses + props.consumptionTax;
-  const receivedIncome = props.sales - props.expenses - props.consumptionTax -
-    props.incomeTax - props.residentTax - props.nenkin - props.kenkoHoken;
+function Result({sales, expenses, consumptionTax, incomeTax, residentTax, nenkin, kenkoHoken}) {
+  const totalExpenses = expenses + consumptionTax;
+  const receivedIncome = sales - expenses - consumptionTax -
+    incomeTax - residentTax - nenkin - kenkoHoken;
+
   return (
     <table className='table'>
       <tbody>
         <tr>
           <th>売上</th>
-          <td>{props.sales}</td>
+          <td>{showYenHelper(sales)}</td>
         </tr>
         <tr>
           <th>経費</th>
-          <td>{expenses}(消費税納税額{props.consumptionTax}円含む)
+          <td>{showYenHelper(totalExpenses)}<br />(消費税納税額{showYenHelper(consumptionTax)}含む)
           </td>
         </tr>
         <tr>
           <th>所得税</th>
-          <td>{props.incomeTax}</td>
+          <td>{showYenHelper(incomeTax)}</td>
         </tr>
         <tr>
           <th>住民税</th>
-          <td>{props.residentTax}</td>
+          <td>{showYenHelper(residentTax)}</td>
         </tr>
         <tr>
           <th>国民年金</th>
-          <td>{props.nenkin}</td>
+          <td>{showYenHelper(nenkin)}</td>
         </tr>
         <tr>
           <th>国民健康保険</th>
-          <td>{props.kenkoHoken}</td>
+          <td>{showYenHelper(kenkoHoken)}</td>
         </tr>
         <tr>
           <th>手取り</th>
-          <td>{receivedIncome}</td>
+          <td>{showYenHelper(receivedIncome)}</td>
         </tr>
       </tbody>
     </table>
   );
 }
+
+Result.propTypes = {
+  sales: PropTypes.number.isRequired,
+  expenses: PropTypes.number.isRequired,
+  consumptionTax: PropTypes.number.isRequired,
+  incomeTax: PropTypes.number.isRequired,
+  residentTax: PropTypes.number.isRequired,
+  nenkin: PropTypes.number.isRequired,
+  kenkoHoken: PropTypes.number.isRequired,
+};
 
 export default Result;

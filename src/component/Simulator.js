@@ -43,19 +43,41 @@ class Simulator extends React.Component {
   }
 
   handleSimilateClick() {
-    this.setState({editing: false});
+    if (this.canSimulate()) {
+      this.setState({editing: false});
+    }
   }
 
   canSimulate() {
-    return this.state.sales - this.state.expenses > 0;
+    return this.getSales() - this.getExpenses() > 0;
+  }
+
+  getSales() {
+    return this.state.sales ?? 0;
+  }
+
+  getExpenses() {
+    return this.state.expenses ?? 0;
+  }
+
+  getIncomeTaxKozyoOther() {
+    return this.state.incomeTaxKozyoOther ?? 0;
+  }
+
+  getResidentTaxKozyoOther() {
+    return this.state.residentTaxKozyoOther ?? 0;
+  }
+
+  getAge() {
+    return this.state.age ?? 0;
   }
 
   getConsumptionTax() {
-    return calcConsumptionTax(this.state.sales, this.state.consumptionNonTaxable)
+    return calcConsumptionTax(this.getSales(), this.state.consumptionNonTaxable)
   }
 
   getKenkoHoken() {
-    return calcKenkoHoken(this.state.sales, this.state.expenses, this.state.age);
+    return calcKenkoHoken(this.getSales(), this.getExpenses(), this.getAge());
   }
 
   getNenkin() {
@@ -64,12 +86,12 @@ class Simulator extends React.Component {
 
   getIncomeTax() {
     const syakaihoken = this.getKenkoHoken() + this.getNenkin();
-    return calcIncomeTax(this.state.sales, this.state.expenses, syakaihoken, this.state.incomeTaxKozyoOther);
+    return calcIncomeTax(this.getSales(), this.getExpenses(), syakaihoken, this.getIncomeTaxKozyoOther());
   }
 
   getResidentTax() {
     const syakaihoken = this.getKenkoHoken() + this.getNenkin();
-    return calcResidentTax(this.state.sales, this.state.expenses, syakaihoken, this.state.residentTaxKozyoOther);
+    return calcResidentTax(this.getSales(), this.getExpenses(), syakaihoken, this.getResidentTaxKozyoOther());
   }
 
   render() {

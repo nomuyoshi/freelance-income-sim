@@ -116,6 +116,7 @@ class Simulator extends React.Component {
           residentTaxKozyoOther={this.state.residentTaxKozyoOther}
           handleChange={this.handleChange}
           handleSubmit={this.handleSimilateClick}
+          canSubmit={this.canSimulate()}
         />
         {showResult &&
           <Result

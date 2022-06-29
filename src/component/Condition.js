@@ -1,8 +1,21 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { showYenHelper } from '../helper';
 import { AoiroKozyo, IncomeTaxBasicKozyo, ResidentTaxBasicKozyo } from '../const';
+import Modal from './Modal';
 
-function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoOther, handleChange, handleSubmit}) {
+function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoOther, handleChange, handleSubmit, canSubmit}) {
+  const [showModal, setShowModal] = useState(false);
+
+  const questionIcon = () => {
+    return (
+      <span className="icon-text" style={{cursor: 'pointer'}} onClick={() => {setShowModal(true)}}>
+        <span className="icon has-text-info">
+          <i className="fas fa-circle-question"></i>
+        </span>
+      </span>
+    );
+  };
 
   return (
     <div className='block'>
@@ -32,9 +45,10 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
             <tr>
               <th>所得税<br />所得控除</th>
               <td>
-                所得税基礎控除: {showYenHelper(IncomeTaxBasicKozyo)}<br />
+                基礎控除: {showYenHelper(IncomeTaxBasicKozyo)}<br />
                 社会保険料控除: 自動計算<br />
                 その他: <input type="number" value={incomeTaxKozyoOther ?? ''} name="incomeTaxKozyoOther" onChange={handleChange} />
+                {questionIcon()}
               </td>
             </tr>
             <tr>
@@ -43,14 +57,33 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
                 基礎控除: {showYenHelper(ResidentTaxBasicKozyo)}<br />
                 社会保険料控除: 自動計算<br />
                 その他: <input type="number" value={residentTaxKozyoOther ?? ''} name="residentTaxKozyoOther" onChange={handleChange} />
+                {questionIcon()}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div className='has-text-centered'>
-        <button className='button is-primary' onClick={handleSubmit}>計算</button>
+        <button className='button is-primary' disabled={!canSubmit} onClick={handleSubmit}>計算</button>
       </div>
+      <Modal title='所得控除？' handleClose={() => setShowModal(false)} visible={showModal}>
+        <p>
+          <strong>基礎控除、社会保険料控除以外の所得控除額を入力してください。</strong>
+          <br />
+          <br />
+          【Tips】「小規模企業共済等掛金控除」を利用して節税するのが一般的<br />
+          「小規模企業共済等掛金控除」とはiDeCoや小規模企業共済の掛金が全額所得控除となる制度です。<br />
+          <br />
+          iDeCoや小規模企業共済に上限額まで拠出した場合、所得控除額は次の通り。
+          <div className='content'>
+            <ul>
+              <li>iDeCo(掛金6.8万円/月) → 6.8万円 x 12ヶ月 = <strong>81.6万円</strong></li>
+              <li>小規模企業共済(掛金7万円/月) → 7万円 x 12ヶ月 = <strong>84万円</strong></li>
+            </ul>
+          </div>
+          <span className='is-size-7'>※ iDeCoと小規模企業共済は併用可能</span>
+        </p>
+      </Modal>
     </div>
   );
 }
@@ -63,6 +96,7 @@ Condition.propTypes = {
   residentTaxKozyoOther: PropTypes.number,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  canSubmit: PropTypes.bool.isRequired,
 };
 
 Condition.defaultProps = {
@@ -73,6 +107,7 @@ Condition.defaultProps = {
   residentTaxKozyoOther: 0,
   handleChange: () => {},
   handleSubmit: () => {},
-}
+  canSubmit: false,
+};
 
 export default Condition;

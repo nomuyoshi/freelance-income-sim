@@ -1,13 +1,12 @@
-import { AoiroKozyo, FukkoTokubetsuRate, IncomeTaxBasicKozyo } from "../const";
+import { AoiroKozyo, FukkoTokubetsuRate } from "../const";
 
 // 所得税額計算
-export function calcIncomeTax(sales, expenses, syakaihoken, otherKozyo) {
-  const kozyo = IncomeTaxBasicKozyo + syakaihoken + otherKozyo;
+export default function calcIncomeTax(sales, expenses, kozyo) {
   const taxableIncome = calcTaxableIncome(sales, expenses, kozyo);
   const [rate, kozyoByRate] = getIncomeTaxRateWithKozyo(taxableIncome);
 
-  console.log(taxableIncome, rate, kozyoByRate);
-  return (taxableIncome * rate - kozyoByRate) * (1 + FukkoTokubetsuRate);
+  const tax = (taxableIncome * rate - kozyoByRate) * (1 + FukkoTokubetsuRate);
+  return Math.round(tax);
 }
 
 // 課税所得
@@ -17,6 +16,7 @@ function calcTaxableIncome(sales, expenses, kozyo) {
   return Math.floor(value / 1000) * 1000;
 }
 
+// https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2260.htm
 function getIncomeTaxRateWithKozyo(taxableIncome) {
   if (taxableIncome >= 1000 && taxableIncome <= 1949000) {
     return [0.05, 0];

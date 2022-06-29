@@ -7,10 +7,11 @@ import Condition from './Condition';
 
 import calcKenkoHoken from '../calculator/kenkoHoken';
 import calcNenkin from '../calculator/nenkin';
-import { calcIncomeTax } from '../calculator/incomeTax';
-import { calcResidentTax } from '../calculator/residentTax';
+import calcIncomeTax from '../calculator/incomeTax';
+import calcResidentTax from '../calculator/residentTax';
 import calcConsumptionTax from '../calculator/consumptionTax';
 
+import { AoiroKozyo, IncomeTaxBasicKozyo } from "../const";
 
 class Simulator extends React.Component {
   constructor(props) {
@@ -85,8 +86,8 @@ class Simulator extends React.Component {
   }
 
   getIncomeTax() {
-    const syakaihoken = this.getKenkoHoken() + this.getNenkin();
-    return calcIncomeTax(this.getSales(), this.getExpenses(), syakaihoken, this.getIncomeTaxKozyoOther());
+    const kozyo = IncomeTaxBasicKozyo + this.getKenkoHoken() + this.getNenkin() +  this.getIncomeTaxKozyoOther();
+    return calcIncomeTax(this.getSales(), this.getExpenses(), kozyo);
   }
 
   getResidentTax() {

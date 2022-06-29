@@ -1,7 +1,7 @@
 import { AoiroKozyo, PerCapitalBasisAmount, ResidentTaxRate, ChoseiKozyo, NonTaxableBorder, ResidentTaxBasicKozyo } from "../const";
 
 // 所得税額計算
-export function calcResidentTax(sales, expenses, syakaihoken, otherKozyo) {
+export default function calcResidentTax(sales, expenses, syakaihoken, otherKozyo) {
   // 所得が45万円以下の場合非課税
   if (NonTaxableBorder >= (sales - expenses - AoiroKozyo)) {
     return 0;

@@ -4,7 +4,8 @@ import { showYenHelper } from '../helper';
 import { AoiroKozyo, IncomeTaxBasicKozyo, ResidentTaxBasicKozyo } from '../const';
 import Modal from './Modal';
 
-function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoOther, handleChange, handleSubmit, canSubmit}) {
+function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoOther,
+  consumptionTaxable, handleChange, handleSubmit, canSubmit}) {
   const [showModal, setShowModal] = useState(false);
 
   const questionIcon = () => {
@@ -25,11 +26,25 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
           <tbody>
             <tr>
               <th>年齢</th>
-              <td><input type="number" value={age ?? ''} name="age" onChange={handleChange} /></td>
+              <td><input type='number' value={age ?? ''} name='age' onChange={handleChange} /></td>
             </tr>
             <tr>
               <th>売上</th>
-              <td><input type="number" value={sales ?? ''} name="sales" onChange={handleChange} /></td>
+              <td>
+                <div className='field'>
+                  <div className='control'>
+                    <input type='number' value={sales ?? ''} name='sales' onChange={handleChange} />
+                  </div>
+                </div>
+                <div className='field'>
+                  <div className='control'>
+                    <label className='checkbox'>
+                      <input type='checkbox' name='consumptionTaxable' onChange={handleChange} checked={consumptionTaxable} />
+                      消費税課税事業者
+                    </label>
+                  </div>
+                </div>
+              </td>
             </tr>
             <tr>
               <th>経費</th>
@@ -67,7 +82,7 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
         <button className='button is-primary' disabled={!canSubmit} onClick={handleSubmit}>計算</button>
       </div>
       <Modal title='所得控除？' handleClose={() => setShowModal(false)} visible={showModal}>
-        <p>
+        <div>
           <strong>基礎控除、社会保険料控除以外の所得控除額を入力してください。</strong>
           <br />
           <br />
@@ -82,7 +97,7 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
             </ul>
           </div>
           <span className='is-size-7'>※ iDeCoと小規模企業共済は併用可能</span>
-        </p>
+        </div>
       </Modal>
     </div>
   );
@@ -94,6 +109,7 @@ Condition.propTypes = {
   expenses: PropTypes.number,
   incomeTaxKozyoOther: PropTypes.number,
   residentTaxKozyoOther: PropTypes.number,
+  consumptionTaxable: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   canSubmit: PropTypes.bool.isRequired,
@@ -105,6 +121,7 @@ Condition.defaultProps = {
   expenses: 0,
   incomeTaxKozyoOther: 0,
   residentTaxKozyoOther: 0,
+  consumptionTaxable: false,
   handleChange: () => {},
   handleSubmit: () => {},
   canSubmit: false,

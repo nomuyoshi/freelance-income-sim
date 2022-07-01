@@ -11,7 +11,7 @@ import calcIncomeTax from '../calculator/incomeTax';
 import calcResidentTax from '../calculator/residentTax';
 import calcConsumptionTax from '../calculator/consumptionTax';
 
-import { IncomeTaxBasicKozyo, ResidentTaxBasicKozyo } from "../const";
+import { IncomeTaxBasicKozyo, ResidentTaxBasicKozyo, ConsumptionTaxableBorder } from "../const";
 
 class Simulator extends React.Component {
   constructor(props) {
@@ -21,29 +21,39 @@ class Simulator extends React.Component {
       age: 30,
       sales: 0,
       expenses: 0,
-      consumptionNonTaxable: false,
+      consumptionTaxable: false,
       incomeTaxKozyoOther: 0,
       residentTaxKozyoOther: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSimilateClick = this.handleSimilateClick.bind(this);
+    this.handleSimulateClick = this.handleSimulateClick.bind(this);
   }
 
   handleChange(event) {
-    const name = event.target.name;
-    const parsedValue = parseInt(event.target.value);
+    const target = event.target;
+    const name = target.name;
+
     let value = null;
-    if (!isNaN(parsedValue)) {
-      value = parsedValue;
+    if (target.type === 'checkbox') {
+      value = target.checked;
+    } else if (target.type === 'number') {
+      const parsedValue = parseInt(target.value);
+      value = isNaN(parsedValue) ? null : parsedValue;
     }
-    this.setState({
+    const sales = (name === 'sales' && value != null) ? value : this.state.sales;
+    const updatedState = {
       editing: true,
       [name]: value,
-    });
+    };
+    if (sales >= ConsumptionTaxableBorder) {
+      updatedState.consumptionTaxable = true;
+    }
+
+    this.setState(updatedState);
   }
 
-  handleSimilateClick() {
+  handleSimulateClick() {
     if (this.canSimulate()) {
       this.setState({editing: false});
     }
@@ -114,8 +124,9 @@ class Simulator extends React.Component {
           expenses={this.state.expenses}
           incomeTaxKozyoOther={this.state.incomeTaxKozyoOther}
           residentTaxKozyoOther={this.state.residentTaxKozyoOther}
+          consumptionTaxable={this.state.consumptionTaxable}
           handleChange={this.handleChange}
-          handleSubmit={this.handleSimilateClick}
+          handleSubmit={this.handleSimulateClick}
           canSubmit={this.canSimulate()}
         />
         {showResult &&

@@ -10,7 +10,7 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
 
   const questionIcon = () => {
     return (
-      <span className="icon-text" style={{cursor: 'pointer'}} onClick={() => {setShowModal(true)}}>
+      <span className="icon-text is-clickable" onClick={() => {setShowModal(true)}}>
         <span className="icon has-text-info">
           <i className="fas fa-circle-question"></i>
         </span>
@@ -19,65 +19,63 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
   };
 
   return (
-    <div className='block'>
+    <div className='container'>
       <h2 className='title is-5'>手取りシミュレーション条件</h2>
-      <div className='table-container'>
-        <table className='table simulation-condition'>
-          <tbody>
-            <tr>
-              <th>年齢</th>
-              <td><input type='number' value={age ?? ''} name='age' onChange={handleChange} /></td>
-            </tr>
-            <tr>
-              <th>売上</th>
-              <td>
-                <div className='field'>
-                  <div className='control'>
-                    <input type='number' value={sales ?? ''} name='sales' onChange={handleChange} />
-                  </div>
+      <table className='table is-fullwidth'>
+        <tbody>
+          <tr>
+            <th>年齢</th>
+            <td><input type='number' value={age ?? ''} name='age' onChange={handleChange} /></td>
+          </tr>
+          <tr>
+            <th>売上</th>
+            <td>
+              <div className='field'>
+                <div className='control'>
+                  <input type='number' value={sales ?? ''} name='sales' onChange={handleChange} />
                 </div>
-                <div className='field'>
-                  <div className='control'>
-                    <label className='checkbox'>
-                      <input type='checkbox' name='consumptionTaxable' onChange={handleChange} checked={consumptionTaxable} />
-                      消費税課税事業者
-                    </label>
-                  </div>
+              </div>
+              <div className='field'>
+                <div className='control'>
+                  <label className='checkbox'>
+                    <input type='checkbox' name='consumptionTaxable' onChange={handleChange} checked={consumptionTaxable} />
+                    消費税課税事業者
+                  </label>
                 </div>
-              </td>
-            </tr>
-            <tr>
-              <th>経費</th>
-              <td>
-                <input type="number" value={expenses ?? ''} name="expenses" onChange={handleChange} /><br />
-                <span className='is-size-7 has-text-danger'>※ 前年の消費税納税額を除いた経費を入力。消費税は自動で加算されます。</span>
-              </td>
-            </tr>
-            <tr>
-              <th>青色申告<br />特別控除</th>
-              <td>{showYenHelper(AoiroKozyo)}</td>
-            </tr>
-            <tr>
-              <th>所得税<br />所得控除</th>
-              <td>
-                基礎控除: {showYenHelper(IncomeTaxBasicKozyo)}<br />
-                社会保険料控除: 自動計算<br />
-                その他: <input type="number" value={incomeTaxKozyoOther ?? ''} name="incomeTaxKozyoOther" onChange={handleChange} />
-                {questionIcon()}
-              </td>
-            </tr>
-            <tr>
-              <th>住民税<br />所得控除</th>
-              <td>
-                基礎控除: {showYenHelper(ResidentTaxBasicKozyo)}<br />
-                社会保険料控除: 自動計算<br />
-                その他: <input type="number" value={residentTaxKozyoOther ?? ''} name="residentTaxKozyoOther" onChange={handleChange} />
-                {questionIcon()}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>経費</th>
+            <td>
+              <input type="number" value={expenses ?? ''} name="expenses" onChange={handleChange} /><br />
+              <span className='is-size-7 has-text-danger'>※ 前年の消費税納税額を除いた経費を入力。消費税は自動で加算されます。</span>
+            </td>
+          </tr>
+          <tr>
+            <th>青色申告特別控除</th>
+            <td>{showYenHelper(AoiroKozyo)}</td>
+          </tr>
+          <tr>
+            <th>所得税 控除</th>
+            <td>
+              基礎控除: {showYenHelper(IncomeTaxBasicKozyo)}<br />
+              社会保険料控除: 自動計算<br />
+              その他所得控除: <input type="number" value={incomeTaxKozyoOther ?? ''} name="incomeTaxKozyoOther" onChange={handleChange} />
+              {questionIcon()}
+            </td>
+          </tr>
+          <tr>
+            <th>住民税 控除</th>
+            <td>
+              基礎控除: {showYenHelper(ResidentTaxBasicKozyo)}<br />
+              社会保険料控除: 自動計算<br />
+              その他所得控除: <input type="number" value={residentTaxKozyoOther ?? ''} name="residentTaxKozyoOther" onChange={handleChange} />
+              {questionIcon()}
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div className='has-text-centered'>
         <button className='button is-primary' disabled={!canSubmit} onClick={handleSubmit}>計算</button>
       </div>

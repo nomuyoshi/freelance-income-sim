@@ -60,7 +60,19 @@ class Simulator extends React.Component {
   }
 
   canSimulate() {
+    if (this.exsistsNegativeValue()) {
+      return false;
+    }
+
     return this.getSales() - this.getExpenses() > 0;
+  }
+
+  exsistsNegativeValue() {
+    return this.getAge() < 0 ||
+      this.getSales() < 0 ||
+      this.getExpenses < 0 ||
+      this.getIncomeTaxKozyoOther() < 0 ||
+      this.getResidentTaxKozyoOther() < 0;
   }
 
   getSales() {
@@ -105,6 +117,12 @@ class Simulator extends React.Component {
     return calcResidentTax(this.getSales(), this.getExpenses(), kozyo);
   }
 
+  renderError() {
+    return (
+      <p className='has-text-danger'>入力値を確認してください。赤字の場合、正しくシミュレーションできません。</p>
+    );
+  }
+
   render() {
     let consumptionTax, incomeTax, residentTax, nenkin, kenkoHoken;
     const showResult = !this.state.editing;
@@ -115,7 +133,7 @@ class Simulator extends React.Component {
       nenkin = this.getNenkin();
       kenkoHoken = this.getConsumptionTax();
     }
-
+    const canSimulate = this.canSimulate();
     return (
       <section className='section p-4'>
         <Condition
@@ -127,8 +145,9 @@ class Simulator extends React.Component {
           consumptionTaxable={this.state.consumptionTaxable}
           handleChange={this.handleChange}
           handleSubmit={this.handleSimulateClick}
-          canSubmit={this.canSimulate()}
+          canSubmit={canSimulate}
         />
+        {!canSimulate && this.renderError()}
         {showResult &&
           <Result
             sales={this.state.sales}

@@ -1,11 +1,12 @@
 name: deploy
 on:
   workflow_dispatch:
-    ref: 'main'
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    environment: 
+      name: prod
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js

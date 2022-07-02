@@ -5,7 +5,7 @@ function Header(props) {
       <h1 className='title is-4 has-text-light'>フリーランスエンジニア手取りシミュレーター</h1>
       <p>
       フリーランスエンジニアに特化した手取りシミュレーター。<br />
-      kakunin少ない入力項目で精度の高いシミュレーション可能です。
+      少ない入力項目で精度の高いシミュレーション可能です。
       </p>
     </section>
   );

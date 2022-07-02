@@ -14,10 +14,10 @@ function Result({ sales, expenses, consumptionTax, incomeTax, residentTax, nenki
     }
   }, [scrollBottomRef]);
   return (
-    <div className='block'>
+    <div className='container'>
       <hr />
       <h2 className='title is-5'>手取りシミュレーション結果</h2>
-      <table className='table'>
+      <table className='table is-fullwidth'>
         <tbody>
           <tr>
             <th>売上</th>

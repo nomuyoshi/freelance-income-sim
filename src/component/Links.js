@@ -34,8 +34,7 @@ function Links() {
             <div className='media-content'>
               <div className='content has-text-black'>
                 <p className='has-text-weight-bold'>【実体験】フリーランスエンジニアに興味があるならエージェントに相談しよう！！</p>
-                <p className='is-size-7'>エージェントに相談をすると今までの経験をもとに、狙えそうな案件情報を見せてくれます。<br />
-                「なんとなく不安」、「自分だと単価いくら？」、「どんな案件がある？」といった不安がある人にオススメ。</p>
+                <p className='is-size-7'>エージェントに相談をすると今までの経験をもとに、狙えそうな案件情報を見せてくれます。「なんとなく不安」、「自分だと単価いくら？」、「どんな案件がある？」といった不安がある人にオススメ。</p>
               </div>
             </div>
           </article>

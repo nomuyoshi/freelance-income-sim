@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import { useLayoutEffect, useRef } from 'react';
 import { showYenHelper } from '../helper';
 
+import TweetButton from './TweetButton';
+
 function Result({ sales, expenses, consumptionTax, incomeTax, residentTax, nenkin, kenkoHoken }) {
   const totalExpenses = expenses + consumptionTax;
   const receivedIncome = sales - expenses - consumptionTax -
@@ -17,6 +19,10 @@ function Result({ sales, expenses, consumptionTax, incomeTax, residentTax, nenki
     <div className='container'>
       <div ref={scrollBottomRef} />
       <hr />
+
+      <div className='has-text-right'>
+        <TweetButton />
+      </div>
       <h2 className='title is-5'>
         <span className='icon-text has-text-success'>
           <span className='icon'><i class='fas fa-yen-sign'></i></span>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { showYenHelper } from '../helper';
 import { AoiroKozyo, IncomeTaxBasicKozyo, ResidentTaxBasicKozyo } from '../const';
 import Modal from './Modal';
+import TweetButton from './TweetButton';
 
 function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoOther,
   consumptionTaxable, handleChange, handleSubmit, canSubmit}) {
@@ -20,6 +21,9 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
 
   return (
     <div className='container'>
+      <div className='has-text-right'>
+        <TweetButton />
+      </div>
       <h2 className='title is-5'>
         <span className='icon-text has-text-success'>
           <span className='icon'><i className='fas fa-calculator'></i></span>

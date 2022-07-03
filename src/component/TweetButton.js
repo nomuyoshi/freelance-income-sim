@@ -1,19 +1,20 @@
-import { TwitterShareButton } from 'react-share';
-
 function TweetButton() {
+  const url = new URL("https://twitter.com/intent/tweet");
+  url.searchParams.set("text", "フリーランスエンジニア手取りシミュレーション");
+  url.searchParams.set("url", "https://tedori-sim.freelance-engineer.link/");
+  url.searchParams.set("hashtags", "フリーランスエンジニア,手取り");
   return (
-    <TwitterShareButton
-      url='https://tedori-sim.freelance-engineer.link/'
-      title='フリーランスエンジニア手取りシミュレーション'
-      hashtags={['フリーランスエンジニア', '手取り']}
-      className='button is-primary is-small'
-      resetButtonStyle={false}
+    <a
+      href={url.toString()}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="button is-primary is-small"
     >
       <span className="icon">
         <i className="fab fa-twitter"></i>
       </span>
-      <span>Tweet</span>
-    </TwitterShareButton>
+      <span>シェア</span>
+    </a>
   );
 }
 

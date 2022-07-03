@@ -5,7 +5,7 @@ function Links() {
         <hr />
         <h2 className='title is-5'>
           <span className='icon-text has-text-success'>
-            <span className='icon'><i class='fas fa-check-square'></i></span>
+            <span className='icon'><i className='fas fa-check-square'></i></span>
           </span>
           フリーランスエンジニアお役立ち情報</h2>
         <a href='https://free-engineer.life/how-to-be-freelance-engineer/'>

@@ -22,11 +22,11 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
     <div className='container'>
       <h2 className='title is-5'>
         <span className='icon-text has-text-success'>
-          <span className='icon'><i class='fas fa-calculator'></i></span>
+          <span className='icon'><i className='fas fa-calculator'></i></span>
         </span>
         手取りシミュレーション条件
       </h2>
-      <table className='table is-fullwidth'>
+      <table className='table is-fullwidth simulation-condition'>
         <tbody>
           <tr>
             <th>年齢</th>
@@ -86,12 +86,12 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
         {!canSubmit && <p className='has-text-danger is-size-7'>マイナス入力値がある場合や所得が0円以下の場合はシミュレーションできません</p>}
       </div>
       <Modal title='所得控除？' handleClose={() => setShowModal(false)} visible={showModal}>
-        <div>
-          <strong>基礎控除、社会保険料控除以外の所得控除額を入力してください。</strong>
+        <div className='is-size-6'>
+          「基礎控除」、「社会保険料控除」<strong>以外</strong>の所得控除を入力してください。
           <br />
           <br />
-          【Tips】「小規模企業共済等掛金控除」を利用して節税するのが一般的<br />
-          「小規模企業共済等掛金控除」とはiDeCoや小規模企業共済の掛金が全額所得控除となる制度です。<br />
+          【参考】<br />
+          「小規模企業共済等掛金控除」を利用して節税するのが一般的<br />
           <br />
           iDeCoや小規模企業共済に上限額まで拠出した場合、所得控除額は次の通り。
           <div className='content'>

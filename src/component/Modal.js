@@ -7,10 +7,10 @@ function Modal({ title, children, visible, handleClose }) {
       <div className='modal-background'></div>
       <div className='modal-card'>
         <header className='modal-card-head'>
-          <p className='modal-card-title'>{title}</p>
-          <button className='delete' aria-label='close'></button>
+          <p className='modal-card-title is-size-5'>{title}</p>
+          <button className='delete' aria-label='close' onClick={handleClose}></button>
         </header>
-        <section className="modal-card-body">
+        <section className="modal-card-body is-size-6">
           {children}
         </section>
         <footer className="modal-card-foot">

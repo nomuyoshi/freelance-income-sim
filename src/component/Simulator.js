@@ -117,12 +117,6 @@ class Simulator extends React.Component {
     return calcResidentTax(this.getSales(), this.getExpenses(), kozyo);
   }
 
-  renderError() {
-    return (
-      <p className='has-text-danger'>入力値を確認してください。赤字の場合、正しくシミュレーションできません。</p>
-    );
-  }
-
   render() {
     let consumptionTax, incomeTax, residentTax, nenkin, kenkoHoken;
     const showResult = !this.state.editing;
@@ -147,7 +141,6 @@ class Simulator extends React.Component {
           handleSubmit={this.handleSimulateClick}
           canSubmit={canSimulate}
         />
-        {!canSimulate && this.renderError()}
         {showResult &&
           <Result
             sales={this.state.sales}

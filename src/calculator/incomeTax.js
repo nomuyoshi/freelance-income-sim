@@ -6,6 +6,10 @@ export default function calcIncomeTax(sales, expenses, kozyo) {
   const [rate, kozyoByRate] = getIncomeTaxRateWithKozyo(taxableIncome);
 
   const tax = (taxableIncome * rate - kozyoByRate) * (1 + FukkoTokubetsuRate);
+  if (tax <= 0) { // マイナス0対策
+    return 0;
+  }
+
   return Math.round(tax);
 }
 

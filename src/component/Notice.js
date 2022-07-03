@@ -1,4 +1,4 @@
-function Notice(props) {
+function Notice() {
   return (
     <section className='section p-4'>
       <article className='message'>

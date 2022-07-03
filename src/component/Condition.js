@@ -20,7 +20,12 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
 
   return (
     <div className='container'>
-      <h2 className='title is-5'>手取りシミュレーション条件</h2>
+      <h2 className='title is-5'>
+        <span className='icon-text has-text-success'>
+          <span className='icon'><i class='fas fa-calculator'></i></span>
+        </span>
+        手取りシミュレーション条件
+      </h2>
       <table className='table is-fullwidth'>
         <tbody>
           <tr>
@@ -78,6 +83,7 @@ function Condition({age, sales, expenses, incomeTaxKozyoOther, residentTaxKozyoO
       </table>
       <div className='has-text-centered'>
         <button className='button is-primary' disabled={!canSubmit} onClick={handleSubmit}>計算</button>
+        {!canSubmit && <p className='has-text-danger is-size-7'>マイナス入力値がある場合や所得が0円以下の場合はシミュレーションできません</p>}
       </div>
       <Modal title='所得控除？' handleClose={() => setShowModal(false)} visible={showModal}>
         <div>

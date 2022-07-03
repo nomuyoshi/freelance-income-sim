@@ -15,8 +15,14 @@ function Result({ sales, expenses, consumptionTax, incomeTax, residentTax, nenki
   }, [scrollBottomRef]);
   return (
     <div className='container'>
+      <div ref={scrollBottomRef} />
       <hr />
-      <h2 className='title is-5'>手取りシミュレーション結果</h2>
+      <h2 className='title is-5'>
+        <span className='icon-text has-text-success'>
+          <span className='icon'><i class='fas fa-yen-sign'></i></span>
+        </span>
+        手取りシミュレーション結果
+      </h2>
       <table className='table is-fullwidth'>
         <tbody>
           <tr>
@@ -46,11 +52,26 @@ function Result({ sales, expenses, consumptionTax, incomeTax, residentTax, nenki
           </tr>
           <tr>
             <th>手取り</th>
-            <td>{showYenHelper(receivedIncome)}</td>
+            <td><span className='is-underlined has-text-weight-bold'>{showYenHelper(receivedIncome)}</span></td>
           </tr>
         </tbody>
       </table>
-      <div ref={scrollBottomRef} />
+      <section className='section p-4'>
+        <article className='message is-warning'>
+          <div className='message-header'>
+            <p>ご利用上の注意</p>
+          </div>
+          <div className='message-body content is-size-7'>
+            シミュレーション結果は概算のため実際の手取り額と異なる場合があります。<br />
+            特に以下の条件に当てはまる場合、サイト上部に記載の前提条件から外れるため誤差が大きく生じる可能性があります。
+            <ul>
+              <li>売上5,000万円超</li>
+              <li>所得250万円未満</li>
+              <li>所得2400万円超</li>
+            </ul>
+          </div>
+        </article>
+      </section>
     </div>
   );
 }
